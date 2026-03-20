@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navya Digital News</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700;900&family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#D0021B;--dred:#9B0015;--yel:#F5C518;--blk:#111;--dark:#1a1a1a;--gray:#555;--wht:#fff;--bdr:#e0e0e0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Mukta','Noto Sans Kannada',sans-serif;background:#f0f0f0;color:var(--blk);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* TOPBAR */
+.topbar{background:var(--dark);color:#bbb;font-size:12px;padding:5px 16px;display:flex;justify-content:space-between;align-items:center;}
+.topbar a{color:#bbb;margin-left:10px;}.topbar a:hover{color:var(--yel);}
+.tleft{display:flex;gap:12px;align-items:center;}.tleft b{color:var(--yel);}
+.live{background:var(--red);color:#fff;font-size:10px;font-weight:900;padding:2px 7px;border-radius:3px;display:inline-flex;align-items:center;gap:4px;}
+.live::before{content:'';width:5px;height:5px;background:#fff;border-radius:50%;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* HEADER */
+header{background:var(--wht);border-bottom:3px solid var(--red);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:62px;height:62px;border-radius:50%;border:3px solid var(--red);background:var(--yel);position:relative;overflow:hidden;flex-shrink:0;}
+.logo-icon .top-half{position:absolute;top:0;left:0;right:0;height:50%;background:var(--red);}
+.logo-icon .nv{position:absolute;top:6px;left:10px;font-size:22px;font-weight:900;color:#fff;z-index:2;}
+.logo-icon .tv{position:absolute;bottom:7px;right:8px;font-size:12px;font-weight:900;color:var(--red);z-index:2;}
+.logo-text h1{font-size:24px;font-weight:900;color:var(--red);font-family:'Noto Sans Kannada',sans-serif;line-height:1;}
+.logo-text small{font-size:10px;color:var(--gray);letter-spacing:1.5px;text-transform:uppercase;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.yt-btn{background:var(--red);color:#fff;padding:8px 14px;border-radius:4px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.yt-btn:hover{background:var(--dred);}
+.srch{display:flex;border:2px solid var(--bdr);border-radius:4px;overflow:hidden;}
+.srch input{padding:6px 10px;border:none;outline:none;font-size:13px;width:160px;}
+.srch button{background:var(--red);color:#fff;border:none;padding:6px 10px;cursor:pointer;}
+
+/* NAV */
+nav{background:var(--red);overflow-x:auto;scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+.nav-inner{display:flex;}
+nav a{color:#fff;padding:11px 16px;font-size:13px;font-weight:700;white-space:nowrap;border-right:1px solid rgba(255,255,255,.15);font-family:'Noto Sans Kannada',sans-serif;transition:background .2s;}
+nav a:hover,nav a.act{background:var(--dred);}
+nav a.act{border-bottom:3px solid var(--yel);}
+
+/* TICKER */
+.ticker{background:var(--blk);color:#fff;display:flex;align-items:center;height:34px;overflow:hidden;}
+.tlabel{background:var(--yel);color:var(--blk);padding:0 14px;height:100%;display:flex;align-items:center;font-weight:900;font-size:12px;flex-shrink:0;font-family:'Noto Sans Kannada',sans-serif;}
+.tscroll{overflow:hidden;flex:1;height:100%;display:flex;align-items:center;}
+.tinner{display:flex;animation:scroll 45s linear infinite;white-space:nowrap;}
+.tinner span{padding:0 36px;font-size:12px;font-family:'Noto Sans Kannada',sans-serif;}
+.tinner span::after{content:' \25C6 ';color:var(--yel);margin-left:36px;}
+@keyframes scroll{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+
+/* LAYOUT */
+.wrap{max-width:1160px;margin:0 auto;padding:0 14px;}
+.grid{display:grid;grid-template-columns:1fr 290px;gap:18px;padding:18px 0;}
+
+/* SECTION HEAD */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;border-bottom:3px solid var(--red);padding-bottom:7px;}
+.sh h2{font-size:17px;font-weight:900;color:var(--red);font-family:'Noto Sans Kannada',sans-serif;display:flex;align-items:center;gap:7px;}
+.sh h2::before{content:'';display:inline-block;width:4px;height:18px;background:var(--yel);border-radius:2px;}
+.sh a{font-size:12px;color:var(--red);font-weight:600;}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1.7fr 1fr;grid-template-rows:auto auto;gap:3px;margin-bottom:18px;border-radius:6px;overflow:hidden;}
+.hm{grid-row:1/3;height:320px;position:relative;overflow:hidden;cursor:pointer;}
+.hs{height:158px;position:relative;overflow:hidden;cursor:pointer;}
+.hm:hover .ph img,.hs:hover .ph img{transform:scale(1.05);}
+.ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;transition:transform .4s;}
+.c1{background:linear-gradient(135deg,#c0392b,#7f1b1b);}
+.c2{background:linear-gradient(135deg,#1a3a5c,#0d1f33);}
+.c3{background:linear-gradient(135deg,#2c3e50,#1a252f);}
+.c4{background:linear-gradient(135deg,#4a2040,#2d1328);}
+.c5{background:linear-gradient(135deg,#1a472a,#0d2416);}
+.c6{background:linear-gradient(135deg,#7f4a00,#3d2300);}
+.c7{background:linear-gradient(135deg,#00404a,#001f26);}
+.c8{background:linear-gradient(135deg,#3d2b00,#1e1500);}
+.ov{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.87));padding:36px 12px 12px;}
+.ov .ctag{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;margin-bottom:5px;display:inline-block;font-family:'Noto Sans Kannada',sans-serif;}
+.ov h3{color:#fff;font-size:16px;font-weight:800;line-height:1.35;font-family:'Noto Sans Kannada',sans-serif;}
+.hs .ov h3{font-size:13px;}
+.ov .meta{color:rgba(255,255,255,.65);font-size:11px;margin-top:3px;}
+
+/* NEWS CARDS */
+.ngrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+.card{background:#fff;border-radius:5px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.13);}
+.ci{height:148px;overflow:hidden;}
+.ci .ph{height:100%;}
+.cb{padding:10px 11px 12px;}
+.ccat{font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;font-family:'Noto Sans Kannada',sans-serif;}
+.card h4{font-size:13px;font-weight:700;line-height:1.4;font-family:'Noto Sans Kannada',sans-serif;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.cmeta{font-size:11px;color:#999;}
+
+/* VIDEOS */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+.vcard{background:#fff;border-radius:5px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s;}
+.vcard:hover{transform:translateY(-3px);}
+.vt{height:142px;position:relative;overflow:hidden;}
+.vt .ph{height:100%;}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;background:rgba(208,2,27,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+.vcard:hover .play{transform:translate(-50%,-50%) scale(1.1);}
+.play::after{content:'\25B6';color:#fff;font-size:15px;margin-left:3px;}
+.dur{position:absolute;bottom:6px;right:7px;background:rgba(0,0,0,.8);color:#fff;font-size:11px;padding:2px 5px;border-radius:2px;}
+
+/* CATEGORIES */
+.catbox{background:#fff;border-radius:5px;padding:14px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.cats{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.cp{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid transparent;font-family:'Noto Sans Kannada',sans-serif;transition:transform .2s;}
+.cp:hover{transform:translateY(-1px);}
+.cp1{background:#fff0f0;color:var(--red);border-color:var(--red);}
+.cp2{background:#fff8e1;color:#d67e00;border-color:#d67e00;}
+.cp3{background:#e8f5e9;color:#2e7d32;border-color:#2e7d32;}
+.cp4{background:#e3f2fd;color:#1565c0;border-color:#1565c0;}
+.cp5{background:#f3e5f5;color:#6a1b9a;border-color:#6a1b9a;}
+.cp6{background:#fce4ec;color:#ad1457;border-color:#ad1457;}
+.cp7{background:#e0f2f1;color:#00695c;border-color:#00695c;}
+.cp8{background:#fff3e0;color:#bf360c;border-color:#bf360c;}
+
+/* AD */
+.ad{background:linear-gradient(135deg,#fff8e1,#fff3cd);border:2px dashed var(--yel);border-radius:5px;text-align:center;padding:14px;margin-bottom:18px;color:#888;font-size:13px;font-weight:600;}
+
+/* SIDEBAR */
+.sb{display:flex;flex-direction:column;gap:16px;}
+.sbox{background:#fff;border-radius:5px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.sbh{background:var(--red);color:#fff;padding:9px 13px;font-size:13px;font-weight:800;font-family:'Noto Sans Kannada',sans-serif;}
+.sbi{padding:13px;}
+
+.yt-sub{display:flex;align-items:center;justify-content:space-between;background:var(--red);color:#fff;padding:11px 13px;border-radius:6px;margin-bottom:9px;cursor:pointer;}
+.yt-sub:hover{background:var(--dred);}
+.yt-sub .yi h4{font-size:14px;font-weight:800;}
+.yt-sub .yi p{font-size:11px;opacity:.8;margin-top:1px;}
+.yt-sub .yc strong{font-size:20px;font-weight:900;display:block;text-align:right;}
+.yt-sub .yc span{font-size:10px;opacity:.8;}
+.slinks{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.sl{padding:8px;border-radius:5px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;}
+.sl:hover{opacity:.85;}
+.fb{background:#1877f2;color:#fff;}
+.tw{background:#000;color:#fff;}
+.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;}
+.wh{background:#25d366;color:#fff;}
+
+.tlist{padding:0;}
+.titem{display:flex;gap:9px;padding:10px 13px;border-bottom:1px solid var(--bdr);cursor:pointer;}
+.titem:hover{background:#fafafa;}
+.titem:last-child{border-bottom:none;}
+.tnum{font-size:20px;font-weight:900;color:var(--red);line-height:1;flex-shrink:0;width:20px;}
+.titem h5{font-size:12px;font-weight:600;line-height:1.35;font-family:'Noto Sans Kannada',sans-serif;}
+.titem .tm{font-size:10px;color:#999;margin-top:2px;}
+
+.wx{padding:13px;}
+.wm{display:flex;align-items:center;gap:10px;}
+.wi{font-size:38px;}
+.winfo h3{font-size:26px;font-weight:900;color:var(--red);}
+.winfo p{font-size:12px;color:var(--gray);}
+.winfo .wc{font-weight:700;font-family:'Noto Sans Kannada',sans-serif;}
+
+/* FOOTER */
+footer{background:var(--dark);color:#bbb;margin-top:24px;}
+.ft{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:26px;padding:26px 0;}
+.fc h4{color:var(--yel);font-size:13px;font-weight:800;margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid rgba(255,255,255,.08);font-family:'Noto Sans Kannada',sans-serif;}
+.fc p{font-size:12px;line-height:1.7;color:#999;}
+.fc ul{list-style:none;}
+.fc ul li{margin-bottom:6px;}
+.fc ul li a{font-size:12px;color:#999;}
+.fc ul li a:hover{color:var(--yel);}
+.fc ul li a::before{content:'\25B8 ';color:var(--red);font-size:10px;}
+.flogo{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.fli{width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;}
+.flogo h3{color:#fff;font-size:16px;font-weight:900;font-family:'Noto Sans Kannada',sans-serif;}
+.fb2{background:#0d0d0d;padding:11px 0;text-align:center;font-size:12px;color:#555;}
+.fb2 span{color:var(--red);}
+
+@media(max-width:760px){
+.grid{grid-template-columns:1fr;}
+.ngrid{grid-template-columns:repeat(2,1fr);}
+.vgrid{grid-template-columns:repeat(2,1fr);}
+.hero{grid-template-columns:1fr;}
+.hm{grid-row:auto;height:210px;}
+.ft{grid-template-columns:1fr 1fr;}
+.logo-text h1{font-size:18px;}
+.srch{display:none;}
+}
+@media(max-width:480px){
+.ngrid,.vgrid{grid-template-columns:1fr;}
+.ft{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tleft">
+    <b>&#x0CB6;&#x0CC1;&#x0C95;&#x0CCD;&#x0CB0;&#x0CB5;&#x0CBE;&#x0CB0;, &#x0CAE;&#x0CBE;&#x0CB0;&#x0CCD;&#x0C9A;&#x0CCD; 20, 2025</b>
+    <span class="live">LIVE</span>
+  </div>
+  <div>
+    <a href="#">&#x0CAE;&#x0CA8;&#x0CC6;</a>
+    <a href="#">&#x0CA8;&#x0CAE;&#x0CCD;&#x0CAE; &#x0CAC;&#x0C97;&#x0CCD;&#x0C97;&#x0CC6;</a>
+    <a href="#">&#x0CB8;&#x0C82;&#x0CAA;&#x0CB0;&#x0CCD;&#x0C95;&#x0CBF;&#x0CB8;&#x0CBF;</a>
+    <a href="#">&#x0C9C;&#x0CBE;&#x0CB9;&#x0CC0;&#x0CB0;&#x0CBE;&#x0CA4;&#x0CC1;</a>
+  </div>
+</div>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <div class="top-half"></div>
+      <div class="nv">N</div>
+      <div class="tv">TV</div>
+    </div>
+    <div class="logo-text">
+      <h1>&#x0CA8;&#x0CB5;&#x0CCD;&#x0CAF; &#x0CA1;&#x0CBF;&#x0C9C;&#x0CBF;&#x0C9F;&#x0CB2;&#x0CCD; &#x0CA8;&#x0CCD;&#x0CAF;&#x0CC2;&#x0CB8;&#x0CCD;</h1>
+      <small>Navya Digital News &middot; &#x0CB8;&#x0CA4;&#x0CCD;&#x0CAF; &middot; &#x0CA8;&#x0CCD;&#x0CAF;&#x0CBE;&#x0CAF; &middot; &#x0CA8;&#x0CB5;&#x0CCD;&#x0CAF;</small>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="srch">
+      <input type="text" placeholder="&#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF; &#x0CB9;&#x0CC1;&#x0CA1;&#x0CC1;&#x0C95;&#x0CBF;...">
+      <button>&#x1F50D;</button>
+    </div>
+    <a href="https://www.youtube.com/@NavyaDigitalNews" target="_blank" class="yt-btn">
+      &#x25BA; Subscribe &#x0CAE;&#x0CBE;&#x0CA1;&#x0CBF;
+    </a>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="act">&#x1F3E0; &#x0CAE;&#x0CA8;&#x0CC6;</a>
+    <a href="#">&#x1F3DB;&#xFE0F; &#x0CB0;&#x0CBE;&#x0C9C;&#x0C95;&#x0CC0;&#x0CAF;</a>
+    <a href="#">&#x1F4BC; &#x0CB5;&#x0CCD;&#x0CAF;&#x0CB5;&#x0CB9;&#x0CBE;&#x0CB0;</a>
+    <a href="#">&#x1F30D; &#x0C85;&#x0C82;&#x0CA4;&#x0CB0;&#x0CB0;&#x0CBE;&#x0CB7;&#x0CCD;&#x0C9F;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CAF;</a>
+    <a href="#">&#x26BD; &#x0C95;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CA1;&#x0CC6;</a>
+    <a href="#">&#x1F3AC; &#x0CAE;&#x0CA8;&#x0CB0;&#x0C82;&#x0C9C;&#x0CA8;&#x0CC6;</a>
+    <a href="#">&#x1F4F1; &#x0CA4;&#x0C82;&#x0CA4;&#x0CCD;&#x0CB0;&#x0C9C;&#x0CCD;&#x0C9E;&#x0CBE;&#x0CA8;</a>
+    <a href="#">&#x1F33E; &#x0C95;&#x0CC3;&#x0CB7;&#x0CBF;</a>
+    <a href="#">&#x1F4FA; &#x0CB5;&#x0CC0;&#x0CA1;&#x0CBF;&#x0CAF;&#x0CCB;</a>
+    <a href="#">&#x1F534; &#x0CA8;&#x0CC7;&#x0CB0; &#x0CAA;&#x0CCD;&#x0CB0;&#x0CB8;&#x0CBE;&#x0CB0;</a>
+  </div>
+</nav>
+
+<div class="ticker">
+  <div class="tlabel">&#x0CA4;&#x0CBE;&#x0C9C;&#x0CBE; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF;</div>
+  <div class="tscroll">
+    <div class="tinner">
+      <span>&#x0C95;&#x0CB0;&#x0CB5;&#x0CC7; &#x0C97;&#x0CB0;&#x0CCD;&#x0C9C;&#x0CA8;&#x0CC6;&#x0C97;&#x0CC6; &#x0CB0;&#x0CC8;&#x0CB2;&#x0CCD;&#x0CB5;&#x0CC6; &#x0CAA;&#x0CB0;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CC6; &#x0CAE;&#x0CC1;&#x0C82;&#x0CA6;&#x0CC2;&#x0CA1;&#x0CBF;&#x0C95;&#x0CC6;! &#x0CB8;&#x0CBF;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CC1; &#x0C95;&#x0CBF;&#x0CA1;&#x0CBF;</span>
+      <span>&#x0C87;&#x0CB0;&#x0CBE;&#x0CA8;&#x0CCD;-&#x0C87;&#x0CB8;&#x0CCD;&#x0CB0;&#x0CC7;&#x0CB2;&#x0CCD; &#x0CB8;&#x0C82;&#x0C98;&#x0CB0;&#x0CCD;&#x0CB7;: &#x0C9C;&#x0C97;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CBF;&#x0C97;&#x0CC6; &#x0CB6;&#x0CBE;&#x0C95;&#x0CCD;! &#x0CAE;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CCB;&#x0C82;&#x0CA6;&#x0CC1; &#x0C9C;&#x0CB2;&#x0CB8;&#x0C82;&#x0CA7;&#x0CBF; &#x0CAC;&#x0C82;&#x0CA6;&#x0CCD;</span>
+      <span>&#x0C85;&#x0CAE;&#x0CC3;&#x0CA4; &#x0CAE;&#x0CBF;&#x0CA4;&#x0CCD;&#x0CB0; &#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;&#x0CC6;: &#x0CA6;&#x0CC6;&#x0CB9;&#x0CB2;&#x0CBF;&#x0CAF;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CB0;&#x0CBE;&#x0C9C;&#x0CCD;&#x0CAF;&#x0CA6; &#x0CAE;&#x0CB9;&#x0CBF;&#x0CB3;&#x0CC6;&#x0CAF;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CB8;&#x0CA8;&#x0CCD;&#x0CAE;&#x0CBE;&#x0CA8;</span>
+      <span>&#x0CA1;&#x0CCB&#x0CA8;&#x0CBE;&#x0CB2;&#x0CCD;&#x0CA1;&#x0CCD; &#x0C9F;&#x0CCD;&#x0CB0;&#x0C82;&#x0CAA;&#x0CCD; &#x0CB9;&#x0CCA;&#x0CB8; &#x0CB8;&#x0C82;&#x0CA6;&#x0CC7;&#x0CB6;: &#x0CB9;&#x0CBE;&#x0CB0;&#x0CCD;&#x0CAE;&#x0CC1;&#x0C9C;&#x0CCD; &#x0CAC;&#x0C82;&#x0CA6;&#x0CCD; &#x0CAD;&#x0CC0;&#x0CA4;&#x0CBF;</span>
+      <span>&#x0C92;&#x0CA1;&#x0CBF;&#x0CB6;&#x0CBE; &#x0CB6;&#x0CBE;&#x0CB8;&#x0C95;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CA4;&#x0CB2;&#x0CBE; 5 &#x0C95;&#x0CCB;&#x0C9F;&#x0CBF; &#x0CB0;&#x0CC2;. &#x0C86;&#x0CAE;&#x0CBF;&#x0CB7;! &#x0CA4;&#x0CA8;&#x0CBF;&#x0C96;&#x0CC6; &#x0C86;&#x0CB0;&#x0C82;&#x0CAD;</span>
+      <span>&#x0C95;&#x0CB0;&#x0CCD;&#x0CA8;&#x0CBE;&#x0C9F;&#x0C95; &#x0CB5;&#x0CBF;&#x0CA7;&#x0CBE;&#x0CA8;&#x0CB8;&#x0CAD;&#x0CC6;&#x0CAF;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CAC;&#x0C9C;&#x0CC6;&#x0C9F;&#x0CCD; &#x0C85;&#x0CA7;&#x0CBF;&#x0CB5;&#x0CC7;&#x0CB6;&#x0CA8; &#x0C87;&#x0C82;&#x0CA6;&#x0CBF;&#x0CA8;&#x0CBF;&#x0C82;&#x0CA6; &#x0C86;&#x0CB0;&#x0C82;&#x0CAD;</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid">
+    <div>
+      <div class="ad">&#x1F4E2; &#x0C9C;&#x0CBE;&#x0CB9;&#x0CC0;&#x0CB0;&#x0CBE;&#x0CA4;&#x0CC1; &#x0C87;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CB9;&#x0CBE;&#x0C95;&#x0CBF; &middot; Your Advertisement Here &middot; Call: +91 XXXXX XXXXX</div>
+
+      <div class="sh">
+        <h2>&#x0CAE;&#x0CC1;&#x0C96;&#x0CCD;&#x0CAF; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF;</h2>
+        <a href="#">&#x0C8E;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBE; &#x0CA8;&#x0CCB;&#x0CA1;&#x0CBF; &rarr;</a>
+      </div>
+      <div class="hero">
+        <div class="hm">
+          <div class="ph c1">&#x1F4F0;</div>
+          <div class="ov">
+            <span class="ctag">&#x0CB0;&#x0CBE;&#x0C9C;&#x0C95;&#x0CC0;&#x0CAF;</span>
+            <h3>&#x0C95;&#x0CB0;&#x0CB5;&#x0CC7; &#x0C97;&#x0CB0;&#x0CCD;&#x0C9C;&#x0CA8;&#x0CC6;&#x0C97;&#x0CC6; &#x0CB0;&#x0CC8;&#x0CB2;&#x0CCD;&#x0CB5;&#x0CC6; &#x0CAA;&#x0CB0;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CC6; &#x0CAE;&#x0CC1;&#x0C82;&#x0CA6;&#x0CC2;&#x0CA1;&#x0CBF;&#x0C95;&#x0CC6;! &#x0CB8;&#x0CBF;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CC1; &#x0C95;&#x0CBF;&#x0CA1;&#x0CBF; | Karve Protest</h3>
+            <div class="meta">&#x23F1; 5 &#x0C97;&#x0C82;&#x0C9F;&#x0CC6; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6; &middot; Navya Digital News</div>
+          </div>
+        </div>
+        <div class="hs">
+          <div class="ph c2">&#x1F30D;</div>
+          <div class="ov">
+            <span class="ctag">&#x0C85;&#x0C82;&#x0CA4;&#x0CB0;&#x0CB0;&#x0CBE;&#x0CB7;&#x0CCD;&#x0C9F;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CAF;</span>
+            <h3>&#x0C87;&#x0CB0;&#x0CBE;&#x0CA8;&#x0CCD; &#x0CB5;&#x0CBE;&#x0CB0;&#x0CCD;&#x200C;&#x0C97;&#x0CC6; &#x0CB0;&#x0CC6;&#x0CA1;&#x0CBF;&#x0CAF;&#x0CBE;&#x0CA6;&#x0CCD;&#x0CB0;&#x0CC1; | Iran Israel</h3>
+            <div class="meta">&#x23F1; 1 &#x0CA6;&#x0CBF;&#x0CA8; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div>
+          </div>
+        </div>
+        <div class="hs">
+          <div class="ph c3">&#x1F3DB;&#xFE0F;</div>
+          <div class="ov">
+            <span class="ctag">&#x0CB0;&#x0CBE;&#x0C9C;&#x0CCD;&#x0CAF;</span>
+            <h3>&#x0C85;&#x0CAE;&#x0CC3;&#x0CA4; &#x0CAE;&#x0CBF;&#x0CA4;&#x0CCD;&#x0CB0; &#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;&#x0CC6;: &#x0CA6;&#x0CC6;&#x0CB9;&#x0CB2;&#x0CBF;&#x0CAF;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CAE;&#x0CB9;&#x0CBF;&#x0CB3;&#x0CC6;&#x0CAF;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CB8;&#x0CA8;&#x0CCD;&#x0CAE;&#x0CBE;&#x0CA8;</h3>
+            <div class="meta">&#x23F1; 21 &#x0C97;&#x0C82;&#x0C9F;&#x0CC6; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sh">
+        <h2>&#x0CA4;&#x0CBE;&#x0C9C;&#x0CBE; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF;&#x0C97;&#x0CB3;&#x0CC1;</h2>
+        <a href="#">&#x0C8E;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBE; &#x0CA8;&#x0CCB;&#x0CA1;&#x0CBF; &rarr;</a>
+      </div>
+      <div class="ngrid">
+        <div class="card"><div class="ci"><div class="ph c4">&#x1F4E2;</div></div><div class="cb"><div class="ccat">&#x0CB0;&#x0CBE;&#x0C9C;&#x0C95;&#x0CC0;&#x0CAF;</div><h4>&#x0CA1;&#x0CCB&#x0CA8;&#x0CBE;&#x0CB2;&#x0CCD;&#x0CA1;&#x0CCD; &#x0C9F;&#x0CCD;&#x0CB0;&#x0C82;&#x0CAA;&#x0CCD; | &#x0CB9;&#x0CBE;&#x0CB0;&#x0CCD;&#x0CAE;&#x0CC1;&#x0C9C;&#x0CCD; &#x0CAC;&#x0C82;&#x0CA6;&#x0CCD; &#x0CAD;&#x0CC0;&#x0CA4;&#x0CBF; &#x0CAF;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA7;&#x0CA8;&#x0CCC;&#x0C95;&#x0CC6; &#x0C95;&#x0CB3;&#x0CC1;&#x0CB9;&#x0CBF;&#x0CB8;&#x0CBF;</h4><div class="cmeta">&#x23F1; 2 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 41 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></div>
+        <div class="card"><div class="ci"><div class="ph c5">&#x1F4B0;</div></div><div class="cb"><div class="ccat">&#x0CB0;&#x0CBE;&#x0C9C;&#x0CCD;&#x0CAF;</div><h4>&#x0C92;&#x0CA1;&#x0CBF;&#x0CB6;&#x0CBE; &#x0CB6;&#x0CBE;&#x0CB8;&#x0C95;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CA4;&#x0CB2;&#x0CBE; 5 &#x0C95;&#x0CCB;&#x0C9F;&#x0CBF; &#x0CB0;&#x0CC2;. &#x0C86;&#x0CAE;&#x0CBF;&#x0CB7;! &#x0CA4;&#x0CA8;&#x0CBF;&#x0C96;&#x0CBE; &#x0CA4;&#x0C82;&#x0CA1; &#x0CB0;&#x0C9A;&#x0CA8;&#x0CC6;</h4><div class="cmeta">&#x23F1; 2 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 10 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></div>
+        <div class="card"><div class="ci"><div class="ph c6">&#x1F33E;</div></div><div class="cb"><div class="ccat">&#x0C95;&#x0CC3;&#x0CB7;&#x0CBF;</div><h4>&#x0CB0;&#x0CC8;&#x0CA4;&#x0CB0; &#x0CAC;&#x0CC6;&#x0CB3;&#x0CC6; &#x0CB5;&#x0CBF;&#x0CAE;&#x0CC6;: &#x0CB8;&#x0CB0;&#x0CCD;&#x0C95;&#x0CBE;&#x0CB0; &#x0CB9;&#x0CCA;&#x0CB8; &#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;&#x0CC6; &#x0C98;&#x0CCB;&#x0CB7;&#x0CA3;&#x0CC6;; &#x0CB2;&#x0C95;&#x0CCD;&#x0CB7; &#x0CB0;&#x0CC8;&#x0CA4;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CAA;&#x0CCD;&#x0CB0;&#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;</h4><div class="cmeta">&#x23F1; 3 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 28 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></div>
+        <div class="card"><div class="ci"><div class="ph c7">&#x26BD;</div></div><div class="cb"><div class="ccat">&#x0C95;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CA1;&#x0CC6;</div><h4>IPL 2025: &#x0CAC;&#x0CC6;&#x0C82;&#x0C97;&#x0CB3;&#x0CC2;&#x0CB0;&#x0CC1; vs &#x0CAE;&#x0CC1;&#x0C82;&#x0CAC;&#x0CC8; &#x0CB0;&#x0CCB;&#x0CAE;&#x0CBE;&#x0C82;&#x0C9A;&#x0C95; &#x0CAA;&#x0C82;&#x0CA6;&#x0CCD;&#x0CAF;; &#x0CAF;&#x0CBE;&#x0CB0;&#x0CC1; &#x0C97;&#x0CC6;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CC1;&#x0CA4;&#x0CBE;&#x0CB0;&#x0CC6;?</h4><div class="cmeta">&#x23F1; 4 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 65 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></div>
+        <div class="card"><div class="ci"><div class="ph c8">&#x1F3AC;</div></div><div class="cb"><div class="ccat">&#x0CAE;&#x0CA8;&#x0CB0;&#x0C82;&#x0C9C;&#x0CA8;&#x0CC6;</div><h4>&#x0C95;&#x0CA8;&#x0CCD;&#x0CA8;&#x0CA1; &#x0C9A;&#x0CBF;&#x0CA4;&#x0CCD;&#x0CB0;&#x0CB0;&#x0C82;&#x0C97;: &#x0CB9;&#x0CCA;&#x0CB8; &#x0C9A;&#x0CBF;&#x0CA4;&#x0CCD;&#x0CB0;&#x0CA6; &#x0C9F;&#x0CCD;&#x0CB0;&#x0CC7;&#x0CB2;&#x0CB0;&#x0CCD; &#x0CAC;&#x0CBF;&#x0CA1;&#x0CC1;&#x0C97;&#x0CA1;&#x0CC6;; &#x0CB8;&#x0CC2;&#x0CAA;&#x0CB0;&#x0CCD; &#x0CB8;&#x0CCD;&#x0C9F;&#x0CBE;&#x0CB0;&#x0CCD; &#x0CAE;&#x0CC1;&#x0C96;&#x0CCD;&#x0CAF; &#x0CAA;&#x0CBE;&#x0CA4;&#x0CCD;&#x0CB0;</h4><div class="cmeta">&#x23F1; 5 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 112 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></div>
+        <div class="card"><div class="ci"><div class="ph c1">&#x1F4F1;</div></div><div class="cb"><div class="ccat">&#x0CA4;&#x0C82;&#x0CA4;&#x0CCD;&#x0CB0;&#x0C9C;&#x0CCD;&#x0C9E;&#x0CBE;&#x0CA8;</div><h4>AI &#x0C95;&#x0CCD;&#x0CB0;&#x0CBE;&#x0C82;&#x0CA4;&#x0CBF;: &#x0CAD;&#x0CBE;&#x0CB0;&#x0CA4;&#x0CA6;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x20B910,000 &#x0C95;&#x0CCB;&#x0C9F;&#x0CBF; &#x0CB9;&#x0CC2;&#x0CA1;&#x0CBF;&#x0C95;&#x0CC6;; &#x0CB2;&#x0C95;&#x0CCD;&#x0CB7; &#x0C89;&#x0CA6;&#x0CCD;&#x0CAF;&#x0CCB;&#x0C97; &#x0CB8;&#x0CC3;&#x0CB7;&#x0CCD;&#x0C9F;&#x0CBF;</h4><div class="cmeta">&#x23F1; 6 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 89 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></div>
+      </div>
+
+      <div class="sh">
+        <h2>&#x1F4FA; &#x0CB5;&#x0CC0;&#x0CA1;&#x0CBF;&#x0CAF;&#x0CCB; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF;</h2>
+        <a href="https://www.youtube.com/@NavyaDigitalNews" target="_blank">YouTube &#x0CA8;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CA8;&#x0CCB;&#x0CA1;&#x0CBF; &rarr;</a>
+      </div>
+      <div class="vgrid">
+        <div class="vcard"><div class="vt"><div class="ph c2">&#x1F3A5;</div><div class="play"></div><span class="dur">0:47</span></div><div class="cb"><h4>&#x0C95;&#x0CB0;&#x0CB5;&#x0CC7; &#x0C97;&#x0CB0;&#x0CCD;&#x0C9C;&#x0CA8;&#x0CC6;&#x0C97;&#x0CC6; &#x0CB0;&#x0CC8;&#x0CB2;&#x0CCD;&#x0CB5;&#x0CC6; &#x0CAA;&#x0CB0;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CC6; &#x0CAE;&#x0CC1;&#x0C82;&#x0CA6;&#x0CC2;&#x0CA1;&#x0CBF;&#x0C95;&#x0CC6;! &#x0CB8;&#x0CBF;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CC1; &#x0C95;&#x0CBF;&#x0CA1;&#x0CBF;</h4><div class="cmeta">3 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6; &middot; 5 &#x0C97;&#x0C82;&#x0C9F;&#x0CC6; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></div>
+        <div class="vcard"><div class="vt"><div class="ph c3">&#x1F3A5;</div><div class="play"></div><span class="dur">1:09</span></div><div class="cb"><h4>&#x0C85;&#x0CAE;&#x0CC3;&#x0CA4; &#x0CAE;&#x0CBF;&#x0CA4;&#x0CCD;&#x0CB0; &#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;&#x0CC6; | &#x0CA6;&#x0CC6;&#x0CB9;&#x0CB2;&#x0CBF;&#x0CAF;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CB0;&#x0CBE;&#x0C9C;&#x0CCD;&#x0CAF;&#x0CA6; &#x0CAE;&#x0CB9;&#x0CBF;&#x0CB3;&#x0CC6;&#x0CAF;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CB8;&#x0CA8;&#x0CCD;&#x0CAE;&#x0CBE;&#x0CA8;</h4><div class="cmeta">36 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6; &middot; 21 &#x0C97;&#x0C82;&#x0C9F;&#x0CC6; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></div>
+        <div class="vcard"><div class="vt"><div class="ph c4">&#x1F3A5;</div><div class="play"></div><span class="dur">1:55</span></div><div class="cb"><h4>Iran Israel Conflict | &#x0CAE;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CCB;&#x0C82;&#x0CA6;&#x0CC1; &#x0C9C;&#x0CB2;&#x0CB8;&#x0C82;&#x0CA7;&#x0CBF; &#x0CAC;&#x0C82;&#x0CA6;&#x0CCD;! &#x0C9C;&#x0C97;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CBF;&#x0C97;&#x0CC6; &#x0CB6;&#x0CBE;&#x0C95;&#x0CCD;</h4><div class="cmeta">15 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6; &middot; 1 &#x0CA6;&#x0CBF;&#x0CA8; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></div>
+        <div class="vcard"><div class="vt"><div class="ph c5">&#x1F3A5;</div><div class="play"></div><span class="dur">1:23</span></div><div class="cb"><h4>&#x0C92;&#x0CA1;&#x0CBF;&#x0CB6;&#x0CBE; &#x0CB6;&#x0CBE;&#x0CB8;&#x0C95;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CA4;&#x0CB2;&#x0CBE; 5 &#x0C95;&#x0CCB;&#x0C9F;&#x0CBF; &#x0CB0;&#x0CC2;. &#x0C86;&#x0CAE;&#x0CBF;&#x0CB7;!</h4><div class="cmeta">10 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6; &middot; 2 &#x0CA6;&#x0CBF;&#x0CA8; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></div>
+        <div class="vcard"><div class="vt"><div class="ph c6">&#x1F3A5;</div><div class="play"></div><span class="dur">2:09</span></div><div class="cb"><h4>Donald Trump | &#x0CB9;&#x0CBE;&#x0CB0;&#x0CCD;&#x0CAE;&#x0CC1;&#x0C9C;&#x0CCD; &#x0CAC;&#x0C82;&#x0CA6;&#x0CCD; &#x0CAD;&#x0CC0;&#x0CA4;&#x0CBF; &#x0CAF;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA7;&#x0CA8;&#x0CCC;&#x0C95;&#x0CC6; &#x0C95;&#x0CB3;&#x0CC1;&#x0CB9;&#x0CBF;&#x0CB8;&#x0CBF;</h4><div class="cmeta">41 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6; &middot; 2 &#x0CA6;&#x0CBF;&#x0CA8; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></div>
+        <div class="vcard"><div class="vt"><div class="ph c7">&#x1F3A5;</div><div class="play"></div><span class="dur">3:12</span></div><div class="cb"><h4>&#x0C95;&#x0CB0;&#x0CCD;&#x0CA8;&#x0CBE;&#x0C9F;&#x0C95; &#x0CAC;&#x0C9C;&#x0CC6;&#x0C9F;&#x0CCD; 2025: &#x0CB0;&#x0CC8;&#x0CA4;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CB9;&#x0CCA;&#x0CB8; &#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;&#x0CC6; &#x0C98;&#x0CCB;&#x0CB7;&#x0CA3;&#x0CC6;</h4><div class="cmeta">78 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6; &middot; 3 &#x0CA6;&#x0CBF;&#x0CA8; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></div>
+      </div>
+
+      <div class="catbox">
+        <div class="sh"><h2>&#x0CB5;&#x0CBF;&#x0CAD;&#x0CBE;&#x0C97;&#x0C97;&#x0CB3;&#x0CC1;</h2></div>
+        <div class="cats">
+          <span class="cp cp1">&#x1F3DB;&#xFE0F; &#x0CB0;&#x0CBE;&#x0C9C;&#x0C95;&#x0CC0;&#x0CAF;</span>
+          <span class="cp cp2">&#x1F4BC; &#x0CB5;&#x0CCD;&#x0CAF;&#x0CB5;&#x0CB9;&#x0CBE;&#x0CB0;</span>
+          <span class="cp cp3">&#x1F33E; &#x0C95;&#x0CC3;&#x0CB7;&#x0CBF;</span>
+          <span class="cp cp4">&#x1F30D; &#x0C85;&#x0C82;&#x0CA4;&#x0CB0;&#x0CB0;&#x0CBE;&#x0CB7;&#x0CCD;&#x0C9F;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CAF;</span>
+          <span class="cp cp5">&#x1F3AC; &#x0CAE;&#x0CA8;&#x0CB0;&#x0C82;&#x0C9C;&#x0CA8;&#x0CC6;</span>
+          <span class="cp cp6">&#x26BD; &#x0C95;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CA1;&#x0CC6;</span>
+          <span class="cp cp7">&#x1F4F1; &#x0CA4;&#x0C82;&#x0CA4;&#x0CCD;&#x0CB0;&#x0C9C;&#x0CDE;&#x0CBE;&#x0CA8;</span>
+          <span class="cp cp8">&#x1F3E5; &#x0C86;&#x0CB0;&#x0CCB;&#x0C97;&#x0CCD;&#x0CAF;</span>
+          <span class="cp cp1">&#x2696;&#xFE0F; &#x0CA8;&#x0CCD;&#x0CAF;&#x0CBE;&#x0CAF;</span>
+          <span class="cp cp2">&#x1F393; &#x0CB6;&#x0CBF;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;</span>
+          <span class="cp cp3">&#x1F327;&#xFE0F; &#x0CB9;&#x0CB5;&#x0CBE;&#x0CAE;&#x0CBE;&#x0CA8;</span>
+          <span class="cp cp4">&#x1F534; &#x0CA8;&#x0CC7;&#x0CB0; &#x0CAA;&#x0CCD;&#x0CB0;&#x0CB8;&#x0CBE;&#x0CB0;</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="sb">
+      <div class="sbox">
+        <div class="sbh">&#x1F4FA; &#x0C9A;&#x0CBE;&#x0CA8;&#x0CC6;&#x0CB2;&#x0CCD; &#x0CB8;&#x0CC7;&#x0CB0;&#x0CBF;</div>
+        <div class="sbi">
+          <a href="https://www.youtube.com/@NavyaDigitalNews" target="_blank">
+            <div class="yt-sub">
+              <div class="yi"><h4>Navya Digital News</h4><p>@NavyaDigitalNews</p></div>
+              <div class="yc"><strong>344</strong><span>Subscribers</span></div>
+            </div>
+          </a>
+          <div class="slinks">
+            <div class="sl fb">&#x1F4D8; Facebook</div>
+            <div class="sl tw">&#x1F426; Twitter / X</div>
+            <div class="sl ig">&#x1F4F8; Instagram</div>
+            <div class="sl wh">&#x1F4AC; WhatsApp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sbox">
+        <div class="sbh">&#x1F525; &#x0C9F;&#x0CCD;&#x0CB0;&#x0CC6;&#x0C82;&#x0CA1;&#x0CBF;&#x0C82;&#x0C97;&#x0CCD; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF;</div>
+        <ul class="tlist">
+          <li class="titem"><span class="tnum">1</span><div><h5>&#x0C95;&#x0CB0;&#x0CB5;&#x0CC7; &#x0C97;&#x0CB0;&#x0CCD;&#x0C9C;&#x0CA8;&#x0CC6;&#x0C97;&#x0CC6; &#x0CB0;&#x0CC8;&#x0CB2;&#x0CCD;&#x0CB5;&#x0CC6; &#x0CAA;&#x0CB0;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CC6; &#x0CAE;&#x0CC1;&#x0C82;&#x0CA6;&#x0CC2;&#x0CA1;&#x0CBF;&#x0C95;&#x0CC6;!</h5><div class="tm">5 &#x0C97;&#x0C82;&#x0C9F;&#x0CC6; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></li>
+          <li class="titem"><span class="tnum">2</span><div><h5>&#x0C87;&#x0CB0;&#x0CBE;&#x0CA8;&#x0CCD;-&#x0C87;&#x0CB8;&#x0CCD;&#x0CB0;&#x0CC7;&#x0CB2;&#x0CCD;: &#x0CAE;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CCB;&#x0C82;&#x0CA6;&#x0CC1; &#x0C9C;&#x0CB2;&#x0CB8;&#x0C82;&#x0CA7;&#x0CBF; &#x0CAC;&#x0C82;&#x0CA6;&#x0CCD;!</h5><div class="tm">1 &#x0CA6;&#x0CBF;&#x0CA8; &#x0CB9;&#x0CBF;&#x0C82;&#x0CA6;&#x0CC6;</div></div></li>
+          <li class="titem"><span class="tnum">3</span><div><h5>&#x0CA1;&#x0CCB&#x0CA8;&#x0CBE;&#x0CB2;&#x0CCD;&#x0CA1;&#x0CCD; &#x0C9F;&#x0CCD;&#x0CB0;&#x0C82;&#x0CAA;&#x0CCD; &#x0CB9;&#x0CCA;&#x0CB8; &#x0CB8;&#x0C82;&#x0CA6;&#x0CC7;&#x0CB6;</h5><div class="tm">2 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 41 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></li>
+          <li class="titem"><span class="tnum">4</span><div><h5>&#x0C85;&#x0CAE;&#x0CC3;&#x0CA4; &#x0CAE;&#x0CBF;&#x0CA4;&#x0CCD;&#x0CB0; &#x0CAF;&#x0CCB;&#x0C9C;&#x0CA8;&#x0CC6;: &#x0CA6;&#x0CC6;&#x0CB9;&#x0CB2;&#x0CBF;&#x0CAF;&#x0CB2;&#x0CCD;&#x0CB2;&#x0CBF; &#x0CB8;&#x0CA8;&#x0CCD;&#x0CAE;&#x0CBE;&#x0CA8;</h5><div class="tm">21 &#x0C97;&#x0C82;&#x0C9F;&#x0CC6; &middot; 36 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></li>
+          <li class="titem"><span class="tnum">5</span><div><h5>&#x0C92;&#x0CA1;&#x0CBF;&#x0CB6;&#x0CBE; &#x0CB6;&#x0CBE;&#x0CB8;&#x0C95;&#x0CB0;&#x0CBF;&#x0C97;&#x0CC6; &#x0CA4;&#x0CB2;&#x0CBE; 5 &#x0C95;&#x0CCB;&#x0C9F;&#x0CBF; &#x0CB0;&#x0CC2;. &#x0C86;&#x0CAE;&#x0CBF;&#x0CB7;!</h5><div class="tm">2 &#x0CA6;&#x0CBF;&#x0CA8; &middot; 10 &#x0CB5;&#x0CC0;&#x0C95;&#x0CCD;&#x0CB7;&#x0CA3;&#x0CC6;</div></div></li>
+        </ul>
+      </div>
+
+      <div class="sbox">
+        <div class="sbh">&#x1F324;&#xFE0F; &#x0CB9;&#x0CB5;&#x0CBE;&#x0CAE;&#x0CBE;&#x0CA8;</div>
+        <div class="wx">
+          <div class="wm">
+            <div class="wi">&#x26C5;</div>
+            <div class="winfo">
+              <h3>28&deg;C</h3>
+              <p class="wc">&#x0CAC;&#x0CC6;&#x0C82;&#x0C97;&#x0CB3;&#x0CC2;&#x0CB0;&#x0CC1;</p>
+              <p>&#x0CAD;&#x0CBE;&#x0C97;&#x0CB6;&#x0CB8;&#x0CB9; &#x0CAE;&#x0CCB;&#x0CA1; &middot; 65% &#x0C86;&#x0CB0;&#x0CCD;&#x0CA6;&#x0CCD;&#x0CB0;&#x0CA4;&#x0CC6;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ad" style="margin-bottom:0;">&#x1F4E2; &#x0CB8;&#x0CC8;&#x0CA1;&#x0CCD;&#x200C;&#x0CAC;&#x0CBE;&#x0CB0;&#x0CCD; &#x0C9C;&#x0CBE;&#x0CB9;&#x0CC0;&#x0CB0;&#x0CBE;&#x0CA4;&#x0CC1;<br><small>300&times;250 Ad Space Available</small></div>
+    </aside>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="ft">
+      <div class="fc">
+        <div class="flogo">
+          <div class="fli">N</div>
+          <h3>&#x0CA8;&#x0CB5;&#x0CCD;&#x0CAF; &#x0CA1;&#x0CBF;&#x0C9C;&#x0CBF;&#x0C9F;&#x0CB2;&#x0CCD; &#x0CA8;&#x0CCD;&#x0CAF;&#x0CC2;&#x0CB8;&#x0CCD;</h3>
+        </div>
+        <p>&#x0CA8;&#x0CB5;&#x0CCD;&#x0CAF; &#x0CA1;&#x0CBF;&#x0C9C;&#x0CBF;&#x0C9F;&#x0CB2;&#x0CCD; &#x0CA8;&#x0CCD;&#x0CAF;&#x0CC2;&#x0CB8;&#x0CCD; &#x0C95;&#x0CA8;&#x0CCD;&#x0CA8;&#x0CA1; &#x0CAD;&#x0CBE;&#x0CB7;&#x0CC6;&#x0CAF; &#x0CA1;&#x0CBF;&#x0C9C;&#x0CBF;&#x0C9F;&#x0CB2;&#x0CCD; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF; &#x0CB5;&#x0CBE;&#x0CB9;&#x0CBF;&#x0CA8;&#x0CBF;. &#x0CB8;&#x0CA4;&#x0CCD;&#x0CAF;, &#x0CA8;&#x0CCD;&#x0CAF;&#x0CBE;&#x0CAF; &#x0CAE;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CC1; &#x0CA8;&#x0CB5;&#x0CCD;&#x0CAF; &#x0CA6;&#x0CC3;&#x0CB7;&#x0CCD;&#x0C9F;&#x0CBF;&#x0C95;&#x0CCB;&#x0CA3;&#x0CA6;&#x0CBF;&#x0C82;&#x0CA6; &#x0CB8;&#x0CC1;&#x0CA6;&#x0CCD;&#x0CA6;&#x0CBF; &#x0CA8;&#x0CC0;&#x0CA1;&#x0CC1;&#x0CB5;&#x0CC1;&#x0CA6;&#x0CC1; &#x0CA8;&#x0CAE;&#x0CCD;&#x0CAE; &#x0CAC;&#x0CA6;&#x0CCD;&#x0CA7;&#x0CA4;&#x0CC6;.</p>
+      </div>
+      <div class="fc">
+        <h4>&#x0CB5;&#x0CBF;&#x0CAD;&#x0CBE;&#x0C97;&#x0C97;&#x0CB3;&#x0CC1;</h4>
+        <ul>
+          <li><a href="#">&#x0CB0;&#x0CBE;&#x0C9C;&#x0C95;&#x0CC0;&#x0CAF;</a></li>
+          <li><a href="#">&#x0CB5;&#x0CCD;&#x0CAF;&#x0CB5;&#x0CB9;&#x0CBE;&#x0CB0;</a></li>
+          <li><a href="#">&#x0C85;&#x0C82;&#x0CA4;&#x0CB0;&#x0CB0;&#x0CBE;&#x0CB7;&#x0CCD;&#x0C9F;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CAF;</a></li>
+          <li><a href="#">&#x0C95;&#x0CCD;&#x0CB0;&#x0CC0;&#x0CA1;&#x0CC6;</a></li>
+          <li><a href="#">&#x0CAE;&#x0CA8;&#x0CB0;&#x0C82;&#x0C9C;&#x0CA8;&#x0CC6;</a></li>
+          <li><a href="#">&#x0C95;&#x0CC3;&#x0CB7;&#x0CBF;</a></li>
+        </ul>
+      </div>
+      <div class="fc">
+        <h4>&#x0CAE;&#x0CBE;&#x0CB9;&#x0CBF;&#x0CA4;&#x0CBF;</h4>
+        <ul>
+          <li><a href="#">&#x0CA8;&#x0CAE;&#x0CCD;&#x0CAE; &#x0CAC;&#x0C97;&#x0CCD;&#x0C97;&#x0CC6;</a></li>
+          <li><a href="#">&#x0CB8;&#x0C82;&#x0CAA;&#x0CBE;&#x0CA6;&#x0C95;&#x0CC0;&#x0CAF;</a></li>
+          <li><a href="#">&#x0C97;&#x0CCC;&#x0CAA;&#x0CCD;&#x0CAF;&#x0CA4;&#x0CC6; &#x0CA8;&#x0CC0;&#x0CA4;&#x0CBF;</a></li>
+          <li><a href="#">&#x0CA8;&#x0CBF;&#x0CAF;&#x0CAE; &amp; &#x0CB7;&#x0CB0;&#x0CA4;&#x0CCD;&#x0CA4;&#x0CC1;</a></li>
+          <li><a href="#">&#x0C9C;&#x0CBE;&#x0CB9;&#x0CC0;&#x0CB0;&#x0CBE;&#x0CA4;&#x0CC1;</a></li>
+          <li><a href="#">&#x0CB8;&#x0C82;&#x0CAA;&#x0CB0;&#x0CCD;&#x0C95;&#x0CBF;&#x0CB8;&#x0CBF;</a></li>
+        </ul>
+      </div>
+      <div class="fc">
+        <h4>&#x0CB8;&#x0C82;&#x0CAA;&#x0CB0;&#x0CCD;&#x0C95;</h4>
+        <ul>
+          <li><a href="#">&#x1F4E7; navyadigital@gmail.com</a></li>
+          <li><a href="#">&#x1F4DE; +91 XXXXX XXXXX</a></li>
+          <li><a href="#">&#x1F4CD; &#x0CAC;&#x0CC6;&#x0C82;&#x0C97;&#x0CB3;&#x0CC2;&#x0CB0;&#x0CC1;, &#x0C95;&#x0CB0;&#x0CCD;&#x0CA8;&#x0CBE;&#x0C9F;&#x0C95;</a></li>
+          <li><a href="https://www.youtube.com/@NavyaDigitalNews" target="_blank">&#x1F4FA; YouTube</a></li>
+          <li><a href="#">&#x1F4D8; Facebook</a></li>
+          <li><a href="#">&#x1F4F8; Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="fb2">&copy; 2025 <span>Navya Digital News</span> &middot; &#x0CA8;&#x0CB5;&#x0CCD;&#x0CAF; &#x0CA1;&#x0CBF;&#x0C9C;&#x0CBF;&#x0C9F;&#x0CB2;&#x0CCD; &#x0CA8;&#x0CCD;&#x0CAF;&#x0CC2;&#x0CB8;&#x0CCD; &middot; &#x0C8E;&#x0CB2;&#x0CCD;&#x0CB2; &#x0CB9;&#x0C95;&#x0CCD;&#x0C95;&#x0CC1;&#x0C97;&#x0CB3;&#x0CC1; &#x0C95;&#x0CBE;&#x0CAF;&#x0CCD;&#x0CA6;&#x0CBF;&#x0CB0;&#x0CBF;&#x0CB8;&#x0CB2;�&#x0CBE;&#x0C97;&#x0CBF;&#x0CA6;&#x0CC6;</div>
+</footer>
+
+</body>
+</html>
